@@ -9,7 +9,7 @@ Você deve exibir, de cada pokémon:
 - imagem
 - nome
 - experiência
-
+s
 Você pode acessar as informações de cada pokemón individualmente em:
 https://pokeapi.co/api/v2/pokemon/:id
 
@@ -73,3 +73,10 @@ const sortAlphabetically = (results) => {
 }
 
 export default App;
+
+/* Tempo de carregamento sem Promise All:
+
+## F5       => Tempo: 3,14 s
+## CTRL + S =>  Tempo: 226 ms
+
+*/
