@@ -28,7 +28,12 @@ function App() {
     axios.get('https://pokeapi.co/api/v2/pokemon').then((response) => {
 
       const sortedList = sortAlphabetically(response.data.results);
-      setList(sortedList);
+
+      const promisesPokemons = sortedList.map(item => {
+        return axios.get(item.url);
+      })
+
+      Promise.all(promisesPokemons).then(response => setList(response));
     });
   }, []);
 
@@ -37,27 +42,17 @@ function App() {
       <h3>desafio fernandev</h3>
       <h1>consumir api pokémon</h1>
       <hr />
-      {list.map((item) => (<Pokemon key={item.name} data={item} />))}
+      {list.map((item) => (<Pokemon key={item.data.name} data={item.data} />))}
     </>
   );
 }
 
 const Pokemon = ({ data }) => {
-  const [details, setDetalis] = useState(null);
-
-  useEffect(() => {
-    axios.get(data.url).then(response => setDetalis(response.data));
-  }, []);
-
-  if (!details) {
-    return <div>Carregando...</div>
-  }
-
   return (
-    <section style={{display: 'flex', alignItems: 'center'}}>
-      <img src={details.sprites.front_default} style={{ width: 80, marginRight: 20}} />
+    <section style={{ display: 'flex', alignItems: 'center' }}>
+      <img src={data.sprites.front_default} style={{ width: 80, marginRight: 20 }} />
       <div>
-        <strong>Name:</strong> {details.name} - <strong>Experience:</strong> {details.base_experience}</div>
+        <strong>Name:</strong> {data.name} - <strong>Experience:</strong> {data.base_experience}</div>
     </section>
   )
 }
