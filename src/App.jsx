@@ -68,3 +68,11 @@ const sortAlphabetically = (results) => {
 }
 
 export default App;
+
+
+/* Tempo de carregamento com Promise All:
+
+## F5       => Tempo: 1,84 s
+## CTRL + S => Tempo: 199 ms
+
+*/
